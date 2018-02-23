@@ -30,6 +30,15 @@ jar {
     baseName = 'boot.ember.vue'
 }
 
+ext {
+    webjarconfig = [
+            staticHTMLFilesDir : "dist/dist",
+            //subDir : ""
+            subDir : "webjars/boot.ember.vue/${version}"
+    ]
+}
+
+
 //bootRun {   
 //      addResources = true
 //}
@@ -147,12 +156,30 @@ task javadocJar(type: Jar, dependsOn:javadoc) {
 	from javadoc.destinationDir
 }
 
+configurations {
+    webjar
+}
+
+task webjar(type: Zip) {
+    // stores jar-file in "target/${version}/distributions"
+    extension 'jar'
+    classifier 'webjar'
+      from (webjarconfig.staticHTMLFilesDir) {
+        into("META-INF/resources/" + webjarconfig.subDir)
+    }
+    outputs.file archivePath
+}
+
 /**
  * Define artifacts
  */
 artifacts {
 	archives sourcesJar
 	archives javadocJar
+	archives webjar(webjar.archivePath) {
+        type 'jar'
+        builtBy webjar
+    }
 }
 
 /**
@@ -161,8 +188,9 @@ artifacts {
 
 task copyDependencies(type: Copy){
          from configurations.compile
-         into 'build/dependencies'         
+         into 'build/dependencies'
+                 
      }
 /**
 ***************************************************************************************
-**/
+*/

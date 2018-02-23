@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 public class App {
 
 	/**
-	 * @param args
+	 * @param args cmdline args
 	 */
 	public static void main(String[] args) {
 		SpringApplication.run(App.class, args);

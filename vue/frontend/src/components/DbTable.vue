@@ -72,7 +72,7 @@
             <el-table-column
                     prop="email"
                     label="email"
-                    width="120">
+                    width="240">
             </el-table-column>
             <el-table-column
                     prop="phone"
@@ -183,11 +183,6 @@
         },
 
         methods: {
-
-            dialogVisible: function () {
-                this.dialogFormVisible = false;
-            },
-
             getCustomers: function () {
                 this.$axios.get(this.apiUrl, {
                     params: {
@@ -234,7 +229,7 @@
                     });
                 location.reload();
             },
-             handleClose(done) {
+            handleClose(done) {
                 this.$confirm('确认关闭？')
                 .then(_ => {
                     done();

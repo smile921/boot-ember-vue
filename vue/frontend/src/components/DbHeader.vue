@@ -12,7 +12,7 @@
         name: 'db-header',
         data () {
             return {
-                msg: 'SpringBoot-vue'
+                msg: 'SpringBoot '
             }
         }
     }
@@ -44,7 +44,7 @@
 
     .meta {
         color: #7e95c5;
-        width: 200px;
+        width: 400px;
         display: block;
         margin: -5px 0 0 225px;
         font-weight: 700;

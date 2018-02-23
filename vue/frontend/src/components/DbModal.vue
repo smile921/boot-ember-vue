@@ -1,5 +1,5 @@
 <template>
-    <el-dialog title="Edit" v-model="dialogFormVisible" :close-on-click-modal="false" :show-close="false">
+    <el-dialog title="Edit" v-model="dialogFormVisible" :close-on-click-modal="false" :show-close="true"  :before-close="handleClose" >
         <el-form :model="form">
             <el-form-item label="item_id" :label-width="formLabelWidth">
                 <el-input :disabled="true" v-model="form.id" auto-complete="off"></el-input>
@@ -53,7 +53,6 @@
                     .then(function (response) {
                         console.log(response);
                         this.form = response.data;
-
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -61,8 +60,13 @@
                 location.reload();
             },
             canclemodal: function () {
-                this.$emit('canclemodal');
-            }
+                console.log('cancle modal triggered');
+                // this.$emit('canclemodal'); // 这里运行时会报错？
+                this.dialogFormVisible = false; // 这里是警告提示不建议这么用
+            },
+            handleClose(done) {
+                done();                 
+            },
         }
 
     }
