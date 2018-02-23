@@ -32,20 +32,20 @@ import org.springframework.web.bind.annotation.RestController;
  *
  */
 @RestController
-@RequestMapping("/api/persons")
+@RequestMapping("/api/users")
 public class UserController {
 
 	@Autowired
-	private UserRepository personsRepository;
+	private UserRepository usersRepository;
 
-	@Value(("${com.boylegu.paginatio.max-per-page}"))
+	@Value(("${org.smile921.app.pagination.max-per-page}"))
 	Integer maxPerPage;
 
 	@RequestMapping(value = "/sex", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getSexAll() {
 
 		/*
-		 * @api {GET} /api/persons/sex Get all sexList
+		 * @api {GET} /api/users/sex Get all sexList
 		 * 
 		 * @apiName GetAllSexList
 		 * 
@@ -55,7 +55,7 @@ public class UserController {
 		 * 
 		 * @apiExample {httpie} Example usage:
 		 *
-		 * http /api/persons/sex
+		 * http /api/users/sex
 		 *
 		 * @apiSuccess {String} label
 		 * 
@@ -64,7 +64,7 @@ public class UserController {
 
 		ArrayList<Map<String, String>> results = new ArrayList<>();
 
-		for (Object value : personsRepository.findSex()) {
+		for (Object value : usersRepository.findSex()) {
 
 			Map<String, String> sex = new HashMap<>();
 
@@ -81,12 +81,12 @@ public class UserController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, PaginationMultiTypeValuesHelper> getPersonsAll(
+	public Map<String, PaginationMultiTypeValuesHelper> getusersAll(
 			@RequestParam(value = "page", required = false) Integer pages, @RequestParam("sex") String sex,
 			@RequestParam("email") String email) {
 
 		/*
-		 * @api {GET} /api/persons Get all or a part of person info
+		 * @api {GET} /api/users Get all or a part of user info
 		 * 
 		 * @apiName GetAllInfoList
 		 * 
@@ -96,11 +96,11 @@ public class UserController {
 		 *
 		 * @apiExample {httpie} Example usage: (support combinatorial search)
 		 *
-		 * All person： http /api/persons
+		 * All user: http /api/users
 		 *
 		 * You can according to 'sex | email' or 'sex & email' http
-		 * /api/persons?sex=xxx&email=xx http /api/persons?sex=xxx http
-		 * /api/persons?email=xx
+		 * /api/users?sex=xxx&email=xx http /api/users?sex=xxx http
+		 * /api/users?email=xx
 		 *
 		 * @apiParam {String} sex
 		 * 
@@ -140,9 +140,9 @@ public class UserController {
 	public ResponseEntity<User> getUserDetail(@PathVariable Long id) {
 
 		/*
-		 * @api {GET} /api/persons/detail/:id details info
+		 * @api {GET} /api/users/detail/:id details info
 		 * 
-		 * @apiName GetPersonDetails
+		 * @apiName GetuserDetails
 		 * 
 		 * @apiGroup Info Manage
 		 * 
@@ -150,7 +150,7 @@ public class UserController {
 		 *
 		 * @apiExample {httpie} Example usage:
 		 *
-		 * http GET http://127.0.0.1:8000/api/persons/detail/1
+		 * http GET http://127.0.0.1:8000/api/users/detail/1
 		 *
 		 * @apiSuccess {String} email
 		 * 
@@ -165,7 +165,7 @@ public class UserController {
 		 * @apiSuccess {String} zone
 		 */
 
-		User user = personsRepository.findById(id);
+		User user = usersRepository.findById(id);
 
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
@@ -174,9 +174,9 @@ public class UserController {
 	public User updateUser(@PathVariable Long id, @RequestBody User data) {
 
 		/*
-		 * @api {PUT} /api/persons/detail/:id update person info
+		 * @api {PUT} /api/users/detail/:id update user info
 		 * 
-		 * @apiName PutPersonDetails
+		 * @apiName PutuserDetails
 		 * 
 		 * @apiGroup Info Manage
 		 * 
@@ -201,13 +201,13 @@ public class UserController {
 		 * @apiSuccess {String} zone
 		 * 
 		 */
-		User user = personsRepository.findById(id);
+		User user = usersRepository.findById(id);
 
 		user.setPhone(data.getPhone());
 
 		user.setZone(data.getZone());
 
-		return personsRepository.save(user);
+		return usersRepository.save(user);
 	}
 
 }

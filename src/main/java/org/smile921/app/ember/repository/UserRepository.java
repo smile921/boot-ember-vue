@@ -18,7 +18,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-	public static final String FIND_SEX = "select DISTINCT sex from Persons p";
+	public static final String FIND_SEX = "select DISTINCT sex from User u";
 
 	@Query(FIND_SEX)
 	List<User> findSex();

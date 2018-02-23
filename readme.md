@@ -7,4 +7,7 @@
   * 然后在刷新工程特别是添加新的依赖后，不然该jar包的引入需要在下次eclipse重启后
 
 # build dev 过程热部署 spring-boot-devtools
-devtools模块，是为开发者服务的一个模块。主要的功能就是代码修改后一般在5秒之内就会自动重新加载至服务器，相当于restart成功。  
+devtools模块，是为开发者服务的一个模块。主要的功能就是代码修改后一般在5秒之内就会自动重新加载至服务器，相当于restart成功。
+## gradle 外部开启debug
+`gradle bootRun --debug-jvm `
+  
