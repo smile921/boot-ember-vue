@@ -13,6 +13,9 @@ import {
     TableColumn,
     Form,
     FormItem,
+    DateTimePicker,
+    DatePicker,
+    TimePicker,
     Input,
     Dialog,
     Option
@@ -39,6 +42,8 @@ Vue.use(Pagination);
 Vue.use(Table);
 Vue.use(TableColumn);
 Vue.use(Form);
+Vue.use(DatePicker);
+Vue.use(TimePicker);
 Vue.use(FormItem);
 Vue.use(Input);
 Vue.use(Dialog);

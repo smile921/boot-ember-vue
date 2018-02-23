@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.smile921.app.ember.controller.pagination.PaginationFormatting;
 import org.smile921.app.ember.controller.pagination.PaginationMultiTypeValuesHelper;
 import org.smile921.app.ember.entities.User;
@@ -35,6 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/users")
 public class UserController {
 
+	private Logger LOG = Logger.getLogger(getClass());
 	@Autowired
 	private UserRepository usersRepository;
 
@@ -122,9 +124,7 @@ public class UserController {
 		 */
 
 		if (pages == null) {
-
 			pages = 1;
-
 		}
 
 		Sort sort = new Sort(Direction.ASC, "id");
@@ -208,6 +208,12 @@ public class UserController {
 		user.setZone(data.getZone());
 
 		return usersRepository.save(user);
+	}
+	
+	@RequestMapping(value = "/detail", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public User addUser( @RequestBody User data) {
+		LOG.debug(data.getUsername());
+		return usersRepository.save(data);
 	}
 
 }
