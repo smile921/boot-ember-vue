@@ -61,8 +61,8 @@
             },
             canclemodal: function () {
                 console.log('cancle modal triggered');
-                // this.$emit('canclemodal'); // 这里运行时会报错？
-                this.dialogFormVisible = false; // 这里是警告提示不建议这么用
+                this.$emit('canclemodal'); // 这里运行时会报错？
+                // this.dialogFormVisible = false; // 这里是警告提示不建议这么用
             },
             handleClose(done) {
                 done();                 

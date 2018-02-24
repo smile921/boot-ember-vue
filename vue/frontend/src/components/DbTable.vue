@@ -236,7 +236,11 @@
                 })
                 .catch(_ => {});
             },
-            
+            canclemodal: function () {
+                console.log('cancle modal triggered parent');
+                this.$emit('canclemodal'); // 这里运行时会报错？
+                // this.dialogFormVisible = false; // 这里是警告提示不建议这么用
+            },
             formatter(row, column) {
                 let data = this.$moment(row.create_datetime, this.$moment.ISO_8601);
                 return data.format('YYYY-MM-DD')

@@ -20,8 +20,10 @@ import {
     Dialog,
     Option
 } from 'element-ui'
+import router from './router';
 import App from './App.vue'
-import 'element-ui/lib/theme-default/index.css'
+import 'element-ui/lib/theme-chalk/index.css' 
+// import 'element-ui/lib/theme-default/index.css'
 import lang from 'element-ui/lib/locale/lang/en'
 import locale from 'element-ui/lib/locale'
 
@@ -56,6 +58,7 @@ locale.use(lang);
 // eslint-disable-next-line no-new
 new Vue({
     el: '#app',
+    router,
     render: h => h(App)
 });
 

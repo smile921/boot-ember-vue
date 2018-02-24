@@ -12,3 +12,4 @@ boot-ember-vue.iws
 boot-ember-vue_main.iml
 boot-ember-vue_test.iml
 dist/
+out/
