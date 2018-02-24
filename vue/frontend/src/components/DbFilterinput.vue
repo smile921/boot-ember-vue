@@ -17,16 +17,16 @@
             <el-input v-model="formInline.email" placeholder="Please input suffix of email"></el-input>
         </el-form-item>
 
-        <el-form-item v-else='formInline.sex' label="Description">
+        <el-form-item v-else label="Description">
             <el-input v-model="formInline.email" disabled placeholder="Please input suffix of email"></el-input>
         </el-form-item>
 
     </el-form>
-</template>
+</template> 
 
 <script>
     import lodash from 'lodash'
-    import Bus from '../eventBus'
+    // import Bus from '../eventBus'
     import API from '../config/API.config'
 
     export default {

@@ -13,7 +13,7 @@
             </i>
             <i class="footdoc">2018 @  Frere Jac. Commemorate the 6 anniversary of enter the profession </i>
         </div>
-
+ 
         <div class="footer-social">
             <i class="doc-icon-weixin footdoc">
                 <span>Design by Jac</span>
@@ -54,7 +54,6 @@
                 stage.update();
                 requestAnimationFrame(tick)
             }
-
             tick()
         },
 

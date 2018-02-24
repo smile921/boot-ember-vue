@@ -6,5 +6,7 @@ module.exports = {
         apiBase: 'http://127.0.0.1:8888'
     },
     apiBase: 'http://127.0.0.1:8888',
-    api: {}
+    api: {
+        bases: []
+    }
 }

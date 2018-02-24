@@ -1,36 +1,38 @@
-/**
- * Created by gubaoer on 17/4/18.
- */
+// The Vue build version to load with the `import` command
+// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 
-import Vue from 'vue'
+/* eslint-disable */
+import Vue from 'vue';
 import {
-    Button,
-    Select,
-    Row,
-    Col,
-    Pagination,
-    Table,
-    TableColumn,
-    Form,
-    FormItem,
-    DateTimePicker,
-    DatePicker,
-    TimePicker,
-    Input,
-    Dialog,
-    Option
-} from 'element-ui'
-import router from './router';
-import App from './App.vue'
-import 'element-ui/lib/theme-chalk/index.css' 
-// import 'element-ui/lib/theme-default/index.css'
-import lang from 'element-ui/lib/locale/lang/en'
-import locale from 'element-ui/lib/locale'
+  Button,
+  Select,
+  Row,
+  Col,
+  Pagination,
+  Table,
+  TableColumn,
+  Form,
+  FormItem,
+  DateTimePicker,
+  DatePicker,
+  TimePicker,
+  Input,
+  Dialog,
+  Option
+} from 'element-ui';
 
-// more grace import third package !
-import moment from 'moment'
-import axios from 'axios'
-import curvejs from 'curvejs'
+import 'element-ui/lib/theme-chalk/index.css';
+import locale from 'element-ui/lib/locale';
+import lang from 'element-ui/lib/locale/lang/en';
+
+// import more grace third package
+import moment from 'moment';
+import axios from 'axios';
+import curvejs from 'curvejs';
+
+
+import App from './App';
+import router from './router';
 
 Object.defineProperty(Vue.prototype, '$moment', { value: moment });
 Object.defineProperty(Vue.prototype, '$axios', { value: axios });
@@ -53,12 +55,13 @@ Vue.use(Option);
 
 locale.use(lang);
 
+Vue.config.productionTip = false;
 
-
-// eslint-disable-next-line no-new
+/* eslint-disable no-new */
 new Vue({
-    el: '#app',
-    router,
-    render: h => h(App)
+  el: '#app',
+  router,
+  components: { App },
+  template: '<App/>',
 });
-
+/* eslint-disable */

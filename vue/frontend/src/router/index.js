@@ -1,15 +1,21 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import DbHome from '../route/DbHome.vue';
+import HelloWorld from '@/components/HelloWorld';
+import DbHome from '@/components/DbHome';
 
 Vue.use(Router);
 
 export default new Router({
-    routes: [
-        {
-            path: '/',
-            name: 'DbHome',
-            component: DbHome
-        }
-    ]
-})
+  routes: [
+    {
+      path: '/helloworld',
+      name: 'HelloWorld',
+      component: HelloWorld,
+    },
+    {
+      path: '/',
+      name: 'DbHome',
+      component: DbHome
+    }
+  ],
+});

@@ -19,7 +19,6 @@ export default {
     components: {
         DbFilterinput,
         DbTable
-    }
+    } 
 }
 </script>
-

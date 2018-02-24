@@ -99,7 +99,7 @@
                     fixed="right"
                     label="Operation"
                     width="110">
-                <template scope="scope">
+                <template slot-scope="scope">
                     <el-button @click="editItem(scope.$index, tableData)" type="text" size="large">Edit</el-button>
                 </template>
             </el-table-column>
@@ -108,7 +108,7 @@
         <el-pagination class="pagination" layout="prev, pager, next" :total="total" :page-size="pageSize"
                        v-on:current-change="changePage">
         </el-pagination>
-        <db-modal :dialogFormVisible="dialogFormVisible" :form="form" v-on:canclemodal="dialogVisible"></db-modal>
+        <db-modal :dialogFormVisible="dialogFormVisible" :form="form" v-on:canclemodal="dialogVisible1"></db-modal>
     </div>
 
 </template>
@@ -128,9 +128,10 @@
                 currentPage: 1,
                 sex: '',
                 email: '',
-                dialogFormVisible: false,
+                dialogFormVisible: false,                
                 form: '',
                 dialogVisible: false,
+                dialogVisible1: false,
                 newUser:{
                     id: '',
                     username: '',
@@ -204,6 +205,7 @@
                 this.getCustomers()
             },
             editItem: function (index, rows) {
+                // debugger;
                 this.dialogFormVisible = true;
                 const itemId = rows[index].id;
                 const idurl = API.apiBase + '/api/users/detail/' + itemId;
@@ -214,7 +216,7 @@
                 });
             },
             addItem: function(){
-                this.dialogVisible =  true;
+                // this.dialogVisible =  true;
                 const formName = 'newUser';
                 let form = this.$refs[formName];                 
                 // console.log(this.newUser); 
@@ -243,8 +245,8 @@
             },
             formatter(row, column) {
                 let data = this.$moment(row.create_datetime, this.$moment.ISO_8601);
-                return data.format('YYYY-MM-DD')
-            },
+                return data.format('YYYY-MM-DD') 
+            }, 
         }
     }
 </script>

@@ -33,7 +33,8 @@
     export default {
         name: 'app',
         components: {
-            ElRow, DbHeader,
+            ElRow, 
+            DbHeader,
             DbSidebar,          
             DbFooter
         },
