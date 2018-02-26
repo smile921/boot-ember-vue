@@ -7,7 +7,7 @@
             :visible.sync="dialogVisible"
             width="30%"
             :before-close="handleClose">
-            
+
             <el-form :inline="true" :model="newUser" class="demo-form-inline">
                 <el-form-item label="id">
                     <el-input v-model="newUser.id" placeholder="123"></el-input>
@@ -21,7 +21,7 @@
                 <el-form-item label="phone">
                     <el-input v-model="newUser.phone" placeholder="18666888976"></el-input>
                 </el-form-item>
-                <el-form-item label="sex"> 
+                <el-form-item label="sex">
                     <el-select v-model="newUser.sex" placeholder="性别">
                         <el-option label="男" value="male"></el-option>
                         <el-option label="女" value="female"></el-option>
@@ -31,7 +31,7 @@
                     <el-input v-model="newUser.zone" placeholder="300600"></el-input>
                 </el-form-item>
                 <br>
-                <el-form-item label="create date time"> 
+                <el-form-item label="create date time">
                     <el-date-picker
                         v-model="newUser.create_datetime"
                         type="datetime"
@@ -100,155 +100,157 @@
                     label="Operation"
                     width="110">
                 <template slot-scope="scope">
-                    <el-button @click="editItem(scope.$index, tableData)" type="text" size="large">Edit</el-button>
+                    <el-button @click="editItem(scope.$index, tableData)" type="text"
+                    size="large">Edit</el-button>
                 </template>
             </el-table-column>
-            
+
         </el-table>
-        <el-pagination class="pagination" layout="prev, pager, next" :total="total" :page-size="pageSize"
-                       v-on:current-change="changePage">
+        <el-pagination class="pagination" layout="prev, pager, next" :total="total"
+        :page-size="pageSize" v-on:current-change="changePage">
         </el-pagination>
-        <db-modal :dialogFormVisible="dialogFormVisible" :form="form" v-on:canclemodal="dialogVisible1"></db-modal>
+        <db-modal :dialogFormVisible="dialogFormVisible" :form="form"
+        v-on:canclemodal="dialogVisible1"></db-modal>
     </div>
 
 </template>
 
 <script>
-    import Bus from '../eventBus'
-    import DbModal from './DbModal.vue'
-    import API from '../config/API.config'
+import Bus from '../eventBus';
+/* eslint-disable-next-line */
+import DbModal from './DbModal.vue';
+import API from '../config/API.config';
 
-    export default {
-        data(){
-            return {
-                tableData: [],
-                apiUrl: API.apiBase + '/api/users',
-                total: 0,
-                pageSize: 10,
-                currentPage: 1,
-                sex: '',
+export default {
+    data() {
+        return {
+            tableData: [],
+            apiUrl: `${API.apiBase}/api/users`,
+            total: 0,
+            pageSize: 10,
+            currentPage: 1,
+            sex: '',
+            email: '',
+            dialogFormVisible: false,
+            form: '',
+            dialogVisible: false,
+            dialogVisible1: false,
+            newUser: {
+                id: '',
+                username: '',
                 email: '',
-                dialogFormVisible: false,                
-                form: '',
-                dialogVisible: false,
-                dialogVisible1: false,
-                newUser:{
-                    id: '',
-                    username: '',
-                    email: '',
-                    phone: '',                    
-                    sex: '',
-                    zone: '',
-                    create_datetime: '',
-                },
-                pickerOptions: {
-                    shortcuts: [
-                        {
+                phone: '',
+                sex: '',
+                zone: '',
+                create_datetime: '',
+            },
+            pickerOptions: {
+                shortcuts: [
+                    {
                         text: '今天',
                         onClick(picker) {
                             picker.$emit('pick', new Date());
-                        }
-                    }, 
+                        },
+                    },
                     {
                         text: '昨天',
                         onClick(picker) {
                             const date = new Date();
-                            date.setTime(date.getTime() - 3600 * 1000 * 24);
+                            let time = 3600 * 1000;
+                            time *= 24;
+                            date.setTime(date.getTime() - time);
                             picker.$emit('pick', date);
-                        }
-                    }, 
+                        },
+                    },
                     {
                         text: '一周前',
                         onClick(picker) {
                             const date = new Date();
-                            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+                            let time = 3600 * 1000;
+                            time *= 24;
+                            time *= 7;
+                            date.setTime(date.getTime() - time);
                             picker.$emit('pick', date);
-                        }
-                    }]
+                        },
+                    },
+                ],
+            },
+        };
+    },
+    components: {
+        DbModal,
+    },
+    mounted() {
+        this.getCustomers();
+        Bus.$on('filterResultData', (data) => {
+            this.tableData = data.results;
+            this.total = data.total_pages;
+            this.pageSize = data.count;
+            this.email = data.email;
+            this.sex = data.sex;
+        });
+    },
+
+    methods: {
+        getCustomers() {
+            this.$axios.get(this.apiUrl, {
+                params: {
+                    page: this.currentPage,
+                    sex: this.sex,
+                    email: this.email,
                 },
-            }
+            }).then((response) => {
+                this.tableData = response.data.data.results;
+                this.total = response.data.data.total;
+                this.pageSize = response.data.data.count;
+                console.log(response.data.data);
+            }).catch(response => console.log(response));
         },
-        components: {
-            DbModal
-        },
-        mounted () {
+        changePage(currentPage) {
+            this.currentPage = currentPage;
             this.getCustomers();
-            Bus.$on('filterResultData', (data) => {
-                this.tableData = data.results;
-                this.total = data.total_pages;
-                this.pageSize = data.count;
-                this.email = data.email;
-                this.sex = data.sex;
-
-            });
         },
-
-        methods: {
-            getCustomers: function () {
-                this.$axios.get(this.apiUrl, {
-                    params: {
-                        page: this.currentPage,
-                        sex: this.sex,
-                        email: this.email
-                    }
-                }).then((response) => {
-                    this.tableData = response.data.data.results;
-                    this.total = response.data.data.total;
-                    this.pageSize = response.data.data.count;
-                    console.log(response.data.data);
-                }).catch(function (response) {
-                    console.log(response)
-                });
-            },
-            changePage: function (currentPage) {
-                this.currentPage = currentPage;
-                this.getCustomers()
-            },
-            editItem: function (index, rows) {
-                // debugger;
-                this.dialogFormVisible = true;
-                const itemId = rows[index].id;
-                const idurl = API.apiBase + '/api/users/detail/' + itemId;
-                this.$axios.get(idurl).then((response) => {
+        editItem(index, rows) {
+            // debugger;
+            this.dialogFormVisible = true;
+            const itemId = rows[index].id;
+            const idurl = `${API.apiBase}/api/users/detail/${itemId}`;
+            /* eslint-disable no-return-assign */
+            this.$axios.get(idurl).then(response => this.form = response.data)
+                .catch(response => console.log(response));
+        },
+        addItem() {
+            // this.dialogVisible =  true;
+            const formName = 'newUser';
+            /* eslint-disable no-unused-vars */
+            const form = this.$refs[formName];
+            // console.log(this.newUser);
+            // let itemId =  this.newUser.id;
+            this.$axios.post(`${API.apiBase}/api/users/detail/${this.newUser}`)
+                .then(function handleError(response) {
+                    console.log(response);
                     this.form = response.data;
-                }).catch(function (response) {
-                    console.log(response)
-                });
-            },
-            addItem: function(){
-                // this.dialogVisible =  true;
-                const formName = 'newUser';
-                let form = this.$refs[formName];                 
-                // console.log(this.newUser); 
-                let itemId =  this.newUser.id; 
-                this.$axios.post( API.apiBase +'/api/users/detail/' , this.newUser)
-                    .then(function (response) {
-                        console.log(response);
-                        this.form = response.data;
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-                location.reload();
-            },
-            handleClose(done) {
-                this.$confirm('确认关闭？')
-                .then(_ => {
-                    done();
                 })
-                .catch(_ => {});
-            },
-            canclemodal: function () {
-                console.log('cancle modal triggered parent');
-                this.$emit('canclemodal'); // 这里运行时会报错？
-                // this.dialogFormVisible = false; // 这里是警告提示不建议这么用
-            },
-            formatter(row, column) {
-                let data = this.$moment(row.create_datetime, this.$moment.ISO_8601);
-                return data.format('YYYY-MM-DD') 
-            }, 
-        }
-    }
+                .catch(error => console.log(error));
+            location.reload();
+        },
+        handleClose(done) {
+            this.$confirm('确认关闭？')
+                .then(_ => done())
+                .catch(_ => done());
+        },
+        canclemodal() {
+            console.log('cancle modal triggered parent');
+            this.$emit('canclemodal'); // 这里运行时会报错？
+            // this.dialogFormVisible = false; // 这里是警告提示不建议这么用
+        },
+        formatter(row, column) {
+            console.log(column);
+            const data = this.$moment(row.create_datetime, this.$moment.ISO_8601);
+            return data.format('YYYY-MM-DD');
+        },
+    },
+};
 </script>
 
 <style>

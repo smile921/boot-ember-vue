@@ -24,22 +24,20 @@
 </template>
 
 <script>
+import ElRow from 'element-ui/packages/row/src/row';
+import DbHeader  from './components/DbHeader.vue';/* eslint-disable-line */
+import DbSidebar from './components/DbSidebar.vue';/* eslint-disable-line */
+import DbFooter from './components/DbFooter.vue';/* eslint-disable-line */
 
-    import DbHeader  from './components/DbHeader.vue'
-    import DbSidebar from './components/DbSidebar.vue'
-    import DbFooter from './components/DbFooter.vue'    
-    import ElRow from "element-ui/packages/row/src/row";
-
-    export default {
-        name: 'app',
-        components: {
-            ElRow, 
-            DbHeader,
-            DbSidebar,          
-            DbFooter
-        },
-    }
-
+export default {
+    name: 'app',
+    components: {
+        ElRow,
+        DbHeader,
+        DbSidebar,
+        DbFooter,
+    },
+};
 </script>
 
 <style>

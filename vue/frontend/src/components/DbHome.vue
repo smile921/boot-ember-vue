@@ -5,20 +5,21 @@
   </div>
 </template>
 <script>
-
-import DbFilterinput from '../components/DbFilterinput.vue'
-import DbTable from '../components/DbTable.vue'
+/* eslint-disable-next-line */
+import DbFilterinput from '../components/DbFilterinput.vue';
+/* eslint-disable-next-line */
+import DbTable from '../components/DbTable.vue';
 
 export default {
     name: 'db-home',
-    data(){
+    data() {
         return {
 
         };
     },
     components: {
         DbFilterinput,
-        DbTable
-    } 
-}
+        DbTable,
+    },
+};
 </script>

@@ -3,16 +3,14 @@
 </template>
 
 <script>
-
-    export default {
-        name: 'db-sidebar',
-        data() {
-            return {
-                msg: 'Dashboard'
-            }
-        }
-    }
-
+export default {
+    name: 'db-sidebar',
+    data() {
+        return {
+            msg: 'Dashboard',
+        };
+    },
+};
 </script>
 
 <style>

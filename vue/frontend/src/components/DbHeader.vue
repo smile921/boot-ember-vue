@@ -8,14 +8,14 @@
 </template>
 
 <script>
-    export default {
-        name: 'db-header',
-        data () {
-            return {
-                msg: 'SpringBoot '
-            }
-        } 
-    }
+export default {
+    name: 'db-header',
+    data() {
+        return {
+            msg: 'SpringBoot ',
+        };
+    },
+};
 </script>
 
 <style>

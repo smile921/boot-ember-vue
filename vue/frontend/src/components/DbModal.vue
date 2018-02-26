@@ -1,5 +1,6 @@
 <template>
-    <el-dialog title="Edit" v-model="dialogFormVisible" :close-on-click-modal="false" :show-close="true"   >
+    <el-dialog title="Edit" v-model="dialogFormVisible" :close-on-click-modal="false"
+    :show-close="true">
         <el-form :model="form">
             <el-form-item label="item_id" :label-width="formLabelWidth">
                 <el-input :disabled="true" v-model="form.id" auto-complete="off"></el-input>
@@ -32,43 +33,42 @@
 
 
 <script>
-    import API from '../config/API.config'
-    export default {
-        data(){
-            return {
-                formLabelWidth: '120px',
-            }
-        },
-        props: ['dialogFormVisible', 'form'],
+import API from '../config/API.config';
 
-        methods: {
-            updateForm: function (formName) {
-                let itemId = formName.id;
-                let phone = formName.phone;
-                let zone = formName.zone;
-                this.$axios.put( API.apiBase +'/api/users/detail/' + itemId, {
-                    phone: phone,
-                    zone: zone
+export default {
+    data() {
+        return {
+            formLabelWidth: '120px',
+        };
+    },
+    props: ['dialogFormVisible', 'form'],
+
+    methods: {
+        updateForm(formName) {
+            const itemId = formName.id;
+            const phone = formName.phone;
+            const zone = formName.zone;
+            this.$axios.put(`${API.apiBase}/api/users/detail/${itemId}`, {
+                phone,
+                zone,
+            })
+                .then(function callback(response) {
+                    console.log(response);
+                    this.form = response.data;
                 })
-                    .then(function (response) {
-                        console.log(response);
-                        this.form = response.data;
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-                location.reload(); 
-            },
-            canclemodal: function () {
-                console.log('cancle modal triggered');
-                this.$emit('canclemodal'); // 这里运行时会报错？
-                // this.dialogFormVisible = false; // 这里是警告提示不建议这么用
-            },
-            // handleClose(done) {
-            //     done();                 
-            // },
-        }
+                .catch(error => console.log(error));
+            location.reload();
+        },
+        canclemodal() {
+            console.log('cancle modal triggered');
+            this.$emit('canclemodal'); // 这里运行时会报错？
+            // this.dialogFormVisible = false; // 这里是警告提示不建议这么用
+        },
+        // handleClose(done) {
+        //     done();
+        // },
+    },
 
-    }
+};
 
 </script>

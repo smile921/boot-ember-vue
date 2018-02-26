@@ -22,65 +22,59 @@
         </el-form-item>
 
     </el-form>
-</template> 
+</template>
 
 <script>
-    import lodash from 'lodash'
-    // import Bus from '../eventBus'
-    import API from '../config/API.config'
+import lodash from 'lodash'; /* eslint-disable-line */
+import Bus from '../eventBus';
+import API from '../config/API.config';
 
-    export default {
-        name: 'db-filterinput',
-        data() {
-            return {
-                type_options: [],
-                formInline: {
-                    sex: '',
-                    email: ''
-                },
-                formLabelWidth: '120px'
+export default {
+    name: 'db-filterinput',
+    data() {
+        return {
+            type_options: [],
+            formInline: {
+                sex: '',
+                email: '',
+            },
+            formLabelWidth: '120px',
+        };
+    },
+
+    watch: {
+        'formInline.sex': 'filterResultData',
+        'formInline.email': 'filterResultData',
+    },
+
+    methods: {
+        selectDemo(params) {
+            if (params) {
+                this.$axios.get(`${API.apiBase}/api/users/sex`)
+                    .then((response) => {
+                        this.type_options = response.data;
+                        console.log(response.data);
+                    }).catch(response => console.log(response));
             }
         },
-
-        watch: {
-            'formInline.sex': 'filterResultData',
-            'formInline.email': 'filterResultData'
-        },
-
-        methods: {
-            selectDemo: function (params) {
-                if (params) {
-                    this.$axios.get(API.apiBase + "/api/users/sex")
-                        .then((response) => {
-                            this.type_options = response.data;
-                            console.log(response.data);
-                        }).catch(function (response) {
-                        console.log(response)
-                    });
-                }
-
+        filterResultData: _.debounce(
+            function filterData() {
+                this.$axios.get(`${API.apiBase}/api/users`, {
+                    params: {
+                        sex: this.formInline.sex,
+                        email: this.formInline.email,
+                    },
+                }).then((response) => {
+                    /* eslint-dsiable-next-line no-param-reassign */
+                    response.data.sex = this.formInline.sex; /* eslint-disable-line */
+                    /* eslint-dsiable-next-line no-param-reassign */
+                    response.data.email = this.formInline.email; /* eslint-disable-line */
+                    Bus.$emit('filterResultData', response.data);
+                    console.log(response.data);
+                }).catch(response => console.log(response));
             },
-            filterResultData: _.debounce(
-                function () {
-                    this.$axios.get(API.apiBase +"/api/users", {
-                        params: {
-                            sex: this.formInline.sex,
-                            email: this.formInline.email,
-                        }
-                    }).then((response) => {
-                        response.data['sex'] = this.formInline.sex;
-                        response.data['email'] = this.formInline.email;
-                        Bus.$emit('filterResultData', response.data);
-                        console.log(response.data);
-                    }).catch(function (response) {
-                        console.log(response)
-                    });
-
-                },
-                500
-            ),
-        }
-    }
-
-
+            500,
+        ),
+    },
+};
 </script>
