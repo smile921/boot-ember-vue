@@ -1,6 +1,9 @@
 <template>
-    <el-dialog title="Edit" v-model="dialogFormVisible" :close-on-click-modal="false"
-    :show-close="true">
+    <el-dialog
+        title="Edit"
+        :visible.sync="dialogFormVisible"
+        :close-on-click-modal="false"
+        :show-close="true">
         <el-form :model="form">
             <el-form-item label="item_id" :label-width="formLabelWidth">
                 <el-input :disabled="true" v-model="form.id" auto-complete="off"></el-input>
@@ -22,10 +25,9 @@
             <el-form-item label="zone" :label-width="formLabelWidth">
                 <el-input v-model="form.zone" auto-complete="off"></el-input>
             </el-form-item>
-
         </el-form>
         <div slot="footer" class="dialog-footer">
-            <el-button :plain="true" type="danger" v-on:click="canclemodal">Cancel</el-button>
+            <el-button :plain="true" type="danger" @click="canclemodal">Cancel</el-button>             
             <el-button :plain="true" @click="updateForm(form)">Save</el-button>
         </div>
     </el-dialog>
@@ -36,6 +38,7 @@
 import API from '../config/API.config';
 
 export default {
+    name: 'db-modal',
     data() {
         return {
             formLabelWidth: '120px',
@@ -68,7 +71,15 @@ export default {
         //     done();
         // },
     },
-
+    beforeUpdate() {
+        console.log(`${this.dialogFormVisible}, modal 调用了beforeUpdate钩子函数`); 
+    },
+    updated() {
+        console.log(`${this.dialogFormVisible}, modal 调用了updated钩子函数`);
+    },
+    mounted() {
+        console.log(`${this.dialogFormVisible}, modal 调用了 mounted 钩子函数`);
+    },
 };
 
 </script>

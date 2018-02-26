@@ -1,58 +1,6 @@
 <template>
     <div>
-        <el-button type="text" @click="dialogVisible = true">添 加</el-button>
-
-        <el-dialog
-            title="新增用户"
-            :visible.sync="dialogVisible"
-            width="30%"
-            :before-close="handleClose">
-
-            <el-form :inline="true" :model="newUser" class="demo-form-inline">
-                <el-form-item label="id">
-                    <el-input v-model="newUser.id" placeholder="123"></el-input>
-                </el-form-item>
-                <el-form-item label="username">
-                    <el-input v-model="newUser.username" placeholder="张三"></el-input>
-                </el-form-item>
-                <el-form-item label="email">
-                    <el-input v-model="newUser.email" placeholder="zhangsan@gmail.com"></el-input>
-                </el-form-item>
-                <el-form-item label="phone">
-                    <el-input v-model="newUser.phone" placeholder="18666888976"></el-input>
-                </el-form-item>
-                <el-form-item label="sex">
-                    <el-select v-model="newUser.sex" placeholder="性别">
-                        <el-option label="男" value="male"></el-option>
-                        <el-option label="女" value="female"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="zone">
-                    <el-input v-model="newUser.zone" placeholder="300600"></el-input>
-                </el-form-item>
-                <br>
-                <el-form-item label="create date time">
-                    <el-date-picker
-                        v-model="newUser.create_datetime"
-                        type="datetime"
-                        placeholder="选择日期时间"
-                        align="right"
-                        size="large"
-                        format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss"
-                        :picker-options="pickerOptions">
-                    </el-date-picker>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click="addItem">添 加</el-button>
-                </el-form-item>
-            </el-form>
-
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-            </span>
-        </el-dialog>
+        <db-add-user></db-add-user>       
         <el-table
                 :data="tableData"
                 border
@@ -109,8 +57,11 @@
         <el-pagination class="pagination" layout="prev, pager, next" :total="total"
         :page-size="pageSize" v-on:current-change="changePage">
         </el-pagination>
-        <db-modal :dialogFormVisible="dialogFormVisible" :form="form"
-        v-on:canclemodal="dialogVisible1"></db-modal>
+        <db-modal
+            :dialogFormVisible="dialogFormVisible"
+            :form="form"
+            v-on:canclemodal="dialogVisible">
+        </db-modal>
     </div>
 
 </template>
@@ -119,6 +70,7 @@
 import Bus from '../eventBus';
 /* eslint-disable-next-line */
 import DbModal from './DbModal.vue';
+import DbAddUser from './DbAddUser.vue';
 import API from '../config/API.config';
 
 export default {
@@ -131,54 +83,13 @@ export default {
             currentPage: 1,
             sex: '',
             email: '',
-            dialogFormVisible: false,
-            form: '',
-            dialogVisible: false,
-            dialogVisible1: false,
-            newUser: {
-                id: '',
-                username: '',
-                email: '',
-                phone: '',
-                sex: '',
-                zone: '',
-                create_datetime: '',
-            },
-            pickerOptions: {
-                shortcuts: [
-                    {
-                        text: '今天',
-                        onClick(picker) {
-                            picker.$emit('pick', new Date());
-                        },
-                    },
-                    {
-                        text: '昨天',
-                        onClick(picker) {
-                            const date = new Date();
-                            let time = 3600 * 1000;
-                            time *= 24;
-                            date.setTime(date.getTime() - time);
-                            picker.$emit('pick', date);
-                        },
-                    },
-                    {
-                        text: '一周前',
-                        onClick(picker) {
-                            const date = new Date();
-                            let time = 3600 * 1000;
-                            time *= 24;
-                            time *= 7;
-                            date.setTime(date.getTime() - time);
-                            picker.$emit('pick', date);
-                        },
-                    },
-                ],
-            },
+            dialogFormVisible: false,            
+            form: {},
         };
     },
     components: {
         DbModal,
+        DbAddUser,
     },
     mounted() {
         this.getCustomers();
@@ -189,6 +100,7 @@ export default {
             this.email = data.email;
             this.sex = data.sex;
         });
+        console.log('调用了mounted钩子函数');
     },
 
     methods: {
@@ -210,6 +122,9 @@ export default {
             this.currentPage = currentPage;
             this.getCustomers();
         },
+        dialogVisible() {
+            this.dialogFormVisible = false;
+        },
         editItem(index, rows) {
             // debugger;
             this.dialogFormVisible = true;
@@ -219,36 +134,26 @@ export default {
             this.$axios.get(idurl).then(response => this.form = response.data)
                 .catch(response => console.log(response));
         },
-        addItem() {
-            // this.dialogVisible =  true;
-            const formName = 'newUser';
-            /* eslint-disable no-unused-vars */
-            const form = this.$refs[formName];
-            // console.log(this.newUser);
-            // let itemId =  this.newUser.id;
-            this.$axios.post(`${API.apiBase}/api/users/detail/${this.newUser}`)
-                .then(function handleError(response) {
-                    console.log(response);
-                    this.form = response.data;
-                })
-                .catch(error => console.log(error));
-            location.reload();
-        },
-        handleClose(done) {
-            this.$confirm('确认关闭？')
-                .then(_ => done())
-                .catch(_ => done());
-        },
-        canclemodal() {
-            console.log('cancle modal triggered parent');
-            this.$emit('canclemodal'); // 这里运行时会报错？
-            // this.dialogFormVisible = false; // 这里是警告提示不建议这么用
-        },
         formatter(row, column) {
             console.log(column);
             const data = this.$moment(row.create_datetime, this.$moment.ISO_8601);
             return data.format('YYYY-MM-DD');
         },
+    },
+    beforeCreate() {
+        console.log('调用了beforeCreat钩子函数');
+    },
+    created() {
+        console.log('调用了created钩子函数');
+    },
+    beforeMount() {
+        console.log('调用了beforeMount钩子函数');
+    },
+    beforeUpdate() {
+        console.log(`${this.dialogFormVisible}, table 调用了beforeUpdate钩子函数`);
+    },
+    updated() {
+        console.log(`${this.dialogFormVisible}, table 调用了updated钩子函数`);
     },
 };
 </script>
