@@ -33,9 +33,9 @@ import moment from 'moment';
 import axios from 'axios';
 import curvejs from 'curvejs';
 
-
 import App from './App';
 import router from './router';
+
 
 Object.defineProperty(Vue.prototype, '$moment', { value: moment });
 Object.defineProperty(Vue.prototype, '$axios', { value: axios });
