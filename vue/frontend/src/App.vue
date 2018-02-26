@@ -43,7 +43,7 @@ export default {
 <style>
 
     element.style {
-        background-color: rgb(10, 47, 88);
+        background-color: rgb(253, 153, 153);
     }
 
     body {
@@ -78,7 +78,7 @@ export default {
 
     .menu {
         height: 100%;
-        background-color: #eef1f6;
+        background-color: #87e693;
     }
 
     .content {
@@ -90,8 +90,8 @@ export default {
 
     .footer {
         height: 120px;
-        background-color: #324057;
-        color: #a4aebd;
+        background-color: #a1c491;
+        color: #101235;
         width: 100%;
         z-index: 1000;
         margin-top: -120px;

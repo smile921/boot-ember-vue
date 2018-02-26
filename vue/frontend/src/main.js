@@ -3,23 +3,26 @@
 
 /* eslint-disable */
 import Vue from 'vue';
-import {
-  Button,
-  Select,
-  Row,
-  Col,
-  Pagination,
-  Table,
-  TableColumn,
-  Form,
-  FormItem,
-  DateTimePicker,
-  DatePicker,
-  TimePicker,
-  Input,
-  Dialog,
-  Option
-} from 'element-ui';
+// import {
+//   Button,
+//   Select,
+//   Row,
+//   Col,
+//   Radio,
+//   Pagination,
+//   Table,
+//   TableColumn,
+//   Form,
+//   FormItem,
+//   DateTimePicker,
+//   DatePicker,
+//   TimePicker,
+//   NavMenu,
+//   Input,
+//   Dialog,
+//   Option
+// } from 'element-ui';
+import ElementUi from 'element-ui';
 
 import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale';
@@ -38,21 +41,23 @@ Object.defineProperty(Vue.prototype, '$moment', { value: moment });
 Object.defineProperty(Vue.prototype, '$axios', { value: axios });
 Object.defineProperty(Vue.prototype, '$curvejs', { value: curvejs });
 
-Vue.use(Button);
-Vue.use(Select);
-Vue.use(Row);
-Vue.use(Col);
-Vue.use(Pagination);
-Vue.use(Table);
-Vue.use(TableColumn);
-Vue.use(Form);
-Vue.use(DatePicker);
-Vue.use(TimePicker);
-Vue.use(FormItem);
-Vue.use(Input);
-Vue.use(Dialog);
-Vue.use(Option);
-
+// Vue.use(Button);
+// Vue.use(Select);
+// Vue.use(Row);
+// Vue.use(Col);
+// Vue.use(Pagination);
+// Vue.use(Table);
+// Vue.use(TableColumn);
+// Vue.use(Form);
+// Vue.use(Radio);
+// Vue.use(DatePicker);
+// Vue.use(TimePicker);
+// Vue.use(NavMenu);
+// Vue.use(FormItem);
+// Vue.use(Input);
+// Vue.use(Dialog);
+// Vue.use(Option);
+Vue.use(ElementUi);
 locale.use(lang);
 
 Vue.config.productionTip = false;
